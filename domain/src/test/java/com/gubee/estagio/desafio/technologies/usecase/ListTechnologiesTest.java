@@ -32,14 +32,24 @@ public class ListTechnologiesTest {
         var tgtMkt = Collections.singletonList("LOJA FISICA");
         var stk = Collections.singletonList("JAVA");
 
-        Technology technologyTest =
-                new Technology("1", "Example Product", "Example for testing", tgtMkt, stk);
+        Technology technologyTest = Technology.builder()
+                .id("1")
+                .productName("Example Product")
+                .description("Example for testing")
+                .targetMarket(tgtMkt)
+                .stack(stk)
+                .build();
 
         var tgtMkt2 = Collections.singletonList("ECOMMERCE");
         var stk2 = Collections.singletonList("NODEJS");
 
-        Technology technologyTest2 =
-                new Technology("2", "Example Product", "Example for testing", tgtMkt2, stk2);
+        Technology technologyTest2 = Technology.builder()
+                .id("2")
+                .productName("Example Product 2")
+                .description("Example for testing 2")
+                .targetMarket(tgtMkt2)
+                .stack(stk2)
+                .build();
 
         saveTechnologyUseCase.save(technologyTest);
         saveTechnologyUseCase.save(technologyTest2);
