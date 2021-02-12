@@ -7,14 +7,11 @@ import com.gubee.estagio.desafio.technologies.spi.TechnologiesPort;
 import com.gubee.estagio.desafio.technologies.spi.stub.InMemoryTechnologies;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Collections;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class SaveTechnologyTest {
-
-    private TechnologiesPort technologiesPort;
 
     private ListTechnologies listTechUseCase;
 
@@ -22,24 +19,34 @@ public class SaveTechnologyTest {
 
     @BeforeEach
     void setUp() {
-        technologiesPort = new InMemoryTechnologies();
+        TechnologiesPort technologiesPort = new InMemoryTechnologies();
         listTechUseCase = new ListTechnologiesImpl(technologiesPort);
         saveTechnologyUseCase = new SaveTechnologyImpl(technologiesPort);
     }
 
     @Test
     void should_save_technology(){
-        var tgtMkt = Arrays.asList("LOJA FISICA");
-        var stk = Arrays.asList("JAVA");
+        //given
+        var tgtMkt = Collections.singletonList("LOJA FISICA");
+        var stk = Collections.singletonList("JAVA");
 
-        Technology technologyTest =
-                new Technology("1", "Example Product", "Example for testing", tgtMkt, stk);
+        Technology technologyTest = Technology.builder()
+                .id("1")
+                .productName("Example Product")
+                .description("Example for testing")
+                .targetMarket(tgtMkt)
+                .stack(stk)
+                .build();
 
         saveTechnologyUseCase.save(technologyTest);
 
-        var list = Arrays.asList(technologyTest);
+        //when
+        var listReturned = listTechUseCase.findAllTechnologies();
 
-        assertEquals(list, listTechUseCase.findAllTechnologies());
+        var isEquals = technologyTest.equals(listReturned.get(1));
+
+        //then
+        assertTrue(isEquals);
     }
 
 }

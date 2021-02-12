@@ -11,10 +11,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class ListTechnologiesTest {
-
-    private TechnologiesPort technologiesPort;
 
     private ListTechnologies listTechUseCase;
 
@@ -22,7 +21,7 @@ public class ListTechnologiesTest {
 
     @BeforeEach
     void setUp() {
-        technologiesPort = new InMemoryTechnologies();
+        TechnologiesPort technologiesPort = new InMemoryTechnologies();
         listTechUseCase = new ListTechnologiesImpl(technologiesPort);
         saveTechnologyUseCase = new SaveTechnologyImpl(technologiesPort);
     }
@@ -30,14 +29,14 @@ public class ListTechnologiesTest {
     @Test
     void should_list_technologies() {
         //given
-        var tgtMkt = Arrays.asList("LOJA FISICA");
-        var stk = Arrays.asList("JAVA");
+        var tgtMkt = Collections.singletonList("LOJA FISICA");
+        var stk = Collections.singletonList("JAVA");
 
         Technology technologyTest =
                 new Technology("1", "Example Product", "Example for testing", tgtMkt, stk);
 
-        var tgtMkt2 = Arrays.asList("ECOMMERCE");
-        var stk2 = Arrays.asList("NODEJS");
+        var tgtMkt2 = Collections.singletonList("ECOMMERCE");
+        var stk2 = Collections.singletonList("NODEJS");
 
         Technology technologyTest2 =
                 new Technology("2", "Example Product", "Example for testing", tgtMkt2, stk2);
